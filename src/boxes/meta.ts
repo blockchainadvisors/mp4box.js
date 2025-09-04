@@ -7,6 +7,7 @@ import { irefBox } from '#/boxes/iref';
 import { pitmBox } from '#/boxes/pitm';
 import type { MultiBufferStream } from '#/buffer';
 import { ContainerBox } from '#/containerBox';
+import { xmlBox } from '#/boxes/defaults';
 
 export class metaBox extends FullBox {
   static override readonly fourcc = 'meta' as const;
@@ -34,6 +35,9 @@ export class metaBox extends FullBox {
   irefs: Array<irefBox>;
   dinf: dinfBox;
   dinfs: Array<dinfBox>;
+  xmls: Array<xmlBox> = [];
+
+  subBoxNames = ['hdlr', 'iinf', 'iloc', 'iref', 'pitm', 'iprp', 'idat', 'dinf', 'xml '] as const;
 
   parse(stream: MultiBufferStream) {
     const pos = stream.getPosition();
@@ -60,5 +64,19 @@ export class metaBox extends FullBox {
     // meta is a FullBox in MPEG-4 and a ContainerBox in QTFF
     if (!this.isQT) this.parseFullHeader(stream);
     ContainerBox.prototype.parse.call(this, stream);
+  }
+
+  /** Convenience: install MPEG-7 XML with correct handler */
+  setMpeg7(xml: string, name = 'MPEG-7 XML') {
+    const h = new hdlrBox();
+    h.handler = 'mp7t';
+    h.name = name;
+
+    const x = new xmlBox();
+    // FullBox default parser/writer stores payload in `.data`
+    x.data = new TextEncoder().encode(xml);
+
+    this.hdlr = h;
+    this.xmls = [x];
   }
 }

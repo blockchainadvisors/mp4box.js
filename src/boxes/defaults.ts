@@ -47,6 +47,11 @@ import type { irotBox } from './irot';
 import type { maxrBox } from './maxr';
 import type { MultiBufferStream } from '#/buffer';
 
+import type { grcoBox } from '#/boxes/grco';
+import type { prcoBox } from '#/boxes/prco';
+import type { rucoBox } from '#/boxes/ruco';
+import type { metaBox } from '#/boxes/meta';
+
 /**********************************************************************************/
 /*                                                                                */
 /*                                   Basic Boxes                                  */
@@ -128,7 +133,14 @@ export class moovBox extends ContainerBox {
 
   traks: Array<trakBox> = [];
   psshs: Array<psshBox> = [];
-  subBoxNames = ['trak', 'pssh'] as const;
+
+  meta?: metaBox;
+  metas?: Array<metaBox>;
+  grcos?: Array<grcoBox>;
+  prcos?: Array<prcoBox>;
+  rucos?: Array<rucoBox>;
+
+  subBoxNames = ['trak', 'pssh', 'meta', 'grco', 'prco', 'ruco'] as const;
 }
 export class trakBox extends ContainerBox {
   static override readonly fourcc = 'trak' as const;
@@ -152,6 +164,10 @@ export class trakBox extends ContainerBox {
   first_dts: number;
   first_traf_merged: boolean;
   has_fragment_subsamples: boolean;
+
+  meta?: metaBox;
+  metas?: Array<metaBox>;
+  subBoxNames = ['meta'] as const;
 }
 export class edtsBox extends ContainerBox {
   static override readonly fourcc = 'edts' as const;

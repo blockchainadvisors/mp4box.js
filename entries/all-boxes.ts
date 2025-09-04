@@ -143,6 +143,14 @@ export * from '#/boxes/vttC';
 export * from '#/boxes/vvcC';
 export * from '#/boxes/vvnC';
 
+export * from '#/boxes/grco';
+export * from '#/boxes/grup';
+export * from '#/boxes/prco';
+export * from '#/boxes/prst';
+export * from '#/boxes/ruco';
+export * from '#/boxes/rusc';
+export * from '#/boxes/rumx';
+
 export * from '#/boxes/samplegroups/alst';
 export * from '#/boxes/samplegroups/avll';
 export * from '#/boxes/samplegroups/avss';

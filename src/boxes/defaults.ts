@@ -32,6 +32,11 @@ import type { trefBox } from '#/boxes/tref';
 import type { trexBox } from '#/boxes/trex';
 import type { trunBox } from '#/boxes/trun';
 import type { tycoBox } from '#/boxes/tyco';
+
+import type { grcoBox } from '#/boxes/grco';
+import type { prcoBox } from '#/boxes/prco';
+import type { rucoBox } from '#/boxes/ruco';
+
 import type { SampleGroupInfo } from '#/isofile';
 import type { Sample } from '@types';
 import type { drefBox } from './dref';
@@ -126,9 +131,13 @@ export class moovBox extends ContainerBox {
   iodss: Array<iodsBox>;
   trak: trakBox;
 
+  grcos: Array<grcoBox>;
+  prcos: Array<prcoBox>;
+  rucos: Array<rucoBox>;
+
   traks: Array<trakBox> = [];
   psshs: Array<psshBox> = [];
-  subBoxNames = ['trak', 'pssh'] as const;
+  subBoxNames = ['trak', 'pssh', 'grco', 'prco', 'ruco'] as const;
 }
 export class trakBox extends ContainerBox {
   static override readonly fourcc = 'trak' as const;
